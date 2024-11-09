@@ -8,6 +8,7 @@ import GoogleMapView from "@/components/google-map";
 // import Workflows from "@/components/workflows";
 // import Features from "@/components/features";
 import Testimonials from "@/components/testimonials";
+import Button from "@/components/button_view";
 // import Cta from "@/components/cta";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       <div className="mt-20 h-[500px] w-full flex items-center justify-center bg-gray-900/90 rounded-lg">    
         <GoogleMapView />
       </div>
+      <Button />
       <Testimonials />
       {/* <Hero />
       <Workflows />
