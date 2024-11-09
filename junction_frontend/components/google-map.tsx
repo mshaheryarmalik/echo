@@ -60,12 +60,13 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
       });
       
       const data = await response.json();
+      let rep = data.report;
       // onResp(data);
-      onDataReceived(data);
-      return data;
+      onDataReceived(rep);
+      return rep;
     } catch (error) {
       console.error('Error:', error);
-      onDataReceived(error);
+      onDataReceived("Temp data");
       throw error;
     }
   }
