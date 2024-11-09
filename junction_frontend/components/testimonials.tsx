@@ -5,6 +5,9 @@ import useMasonry from "@/utils/useMasonry";
 import Image, { StaticImageData } from "next/image";
 import TestimonialImg01 from "@/public/images/testimonial-01.jpg";
 import ClientImg01 from "@/public/images/client-logo-01.svg";
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
 
 interface Testimonials {
   data: any;
@@ -20,31 +23,46 @@ const defaultReport = [
   }]
 
 
-export default function Testimonials({ reportData }: Report) {
+export default function Testimonials({reportData}: Report) {
   const masonryContainer = useMasonry();
   const [category, setCategory] = useState<number>(1);
-  const [recievedReport, setReport] = useState<Report[]>([
-    {
-      reportData: ""
-    },
-  ]);
+  const [recievedReport, setReport] = useState<String>('');
+  const [markdownContent, setMarkdownContent] = useState('');
+  const markdown = '# Hi, *Pluto*!'
 
   useEffect(() => {
     setReport(reportData);
   }, [reportData]);
+
+  useEffect(() => {
+    const fetchMarkdown = async () => {
+      try {
+        const response = await fetch('junction_frontend/public/temp.md');
+        const text = await response.text();
+        setMarkdownContent(text);
+      } catch (error) {
+        console.error('Error loading markdown:', error);
+      }
+    };
+    
+    fetchMarkdown();
+  }, []);
+
   console.log("recievedReport:");
   console.log(recievedReport);
+
+
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6">
       <div className="border-t py-12 [border-image:linear-gradient(to_right,transparent,theme(colors.slate.400/.25),transparent)1] md:py-20">
         {/* Section header */}
         <div className="mx-auto max-w-3xl pb-12 text-center">
           <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,theme(colors.gray.200),theme(colors.indigo.200),theme(colors.gray.50),theme(colors.indigo.300),theme(colors.gray.200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-            Don't take our word for it
+            Find Your Generated Report Below
           </h2>
           <p className="text-lg text-indigo-200/65">
-            We provide tech-first solutions that empower decision-makers to
-            build healthier and happier workspaces from anywhere in the world.
+              Generate insightful, data-driven reports on forest conditions and environmental trends from satellite imagery,
+              tailored to specific geographic areas.
           </p>
         </div>
 
@@ -54,20 +72,17 @@ export default function Testimonials({ reportData }: Report) {
 
           {/* Cards */}
           <div
-            className="mx-auto max-w-sm items-start gap-6 sm:max-w-none sm:grid-cols-2 lg:grid-cols-3"
+            className="mx-auto max-w-sm items-start gap-6 sm:max-w-none"
             ref={masonryContainer}
           >
-          {recievedReport && recievedReport.length > 0 ? 
-            recievedReport.map((testimonial, index) => (
-              <div key={index} className="group">
-                <Testimonial report = {testimonial} category={category}>
-                  {testimonial.reportData}
-                </Testimonial>
-              </div>
-            ))
+          {recievedReport ?
+            <Testimonial report={recievedReport} category={category}>
+                {recievedReport}
+            </Testimonial>
             : 
-            <div>No testimonials available</div>
-          }
+            <div className="prose prose-invert max-w-none">
+              <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
+            </div>}
           </div>
         {/* </div> */}
       </div>
@@ -80,9 +95,7 @@ export function Testimonial({
   category,
   children,
 }: {
-  report: {
-    reportData: any;
-  };
+  report:String;
   category: number;
   children: React.ReactNode;
 }) {
@@ -106,14 +119,17 @@ export function Testimonial({
             alt={report.testimonialsData[0]}
           /> */}
           <div className="text-sm font-medium text-gray-200">
-            <span>{report.reportData}</span>
+            <span>{report}</span>
             <span className="text-gray-700"> - </span>
             <a
               className="text-indigo-200/65 transition-colors hover:text-indigo-500"
               href="#0"
             >
-              {report.reportData}
+              {/* {report} */}
             </a>
+          </div>
+          <div className="prose prose-invert max-w-none">
+              <Markdown remarkPlugins={[remarkGfm]}>{report.toString()}</Markdown>
           </div>
         </div>
       </div>

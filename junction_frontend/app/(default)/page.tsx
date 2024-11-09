@@ -15,8 +15,8 @@ import Testimonials from "@/components/testimonials";
 
 
 export default function Home() {
-  let reportData: any = {};
-  const handlerCLick = (data: any) => {
+  let reportData: String = "";
+  const handlerCLick = (data: String) => {
     console.log("data received :");
     console.log(data);
     reportData = data;
