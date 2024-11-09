@@ -57,7 +57,10 @@ def classify_image(image_path):
     predicted_labels = lb.inverse_transform(predictions)
     return predicted_labels
 
-# Example usage
-image_path = '../../../../sherry/input/test-jpg/test_10.jpg'  # Replace with the path to your image
-predicted_labels = classify_image(image_path)
-print(f"Predicted labels for the image: {predicted_labels}")
+"""
+USAGE
+"""
+
+# image_path = '../../../../sherry/input/test-jpg/test_20.jpg'  # Replace with the path to your image
+# predicted_labels = classify_image(image_path)
+# print(f"Predicted labels for the image: {predicted_labels}")
