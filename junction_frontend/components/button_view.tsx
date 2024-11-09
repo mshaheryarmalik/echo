@@ -20,7 +20,13 @@ const button = [
   }
 ];
 
-export default function Buttons() {
+interface ButtonProps {
+  onClick: () => void;
+  disabled?: boolean;
+}
+
+
+export default function Buttons({ onClick, disabled }: ButtonProps) {
   const masonryContainer = useMasonry();
   const [category, setData] = useState<number>(1);
 

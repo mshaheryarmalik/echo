@@ -15,10 +15,7 @@ export default function Home() {
   return (
     <>
       <PageIllustration />
-      <div className="mt-20 h-[500px] w-full flex items-center justify-center bg-gray-900/90 rounded-lg">    
         <GoogleMapView />
-      </div>
-      <Button />
       <Testimonials />
       {/* <Hero />
       <Workflows />
