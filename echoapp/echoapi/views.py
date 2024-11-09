@@ -106,7 +106,7 @@ def get_emad(request):
             for index, aid in enumerate(aid_labels):
                 if aid in forest_labels_aid_guide:
                     aid_forest.append((index, aid))
-                else:
+                elif aid in non_forest_labels_aid_guide:
                     aid_non_forest.append((index, aid))
 
             # image_path = '../../../../sherry/input/test-jpg/test_20.jpg'  # Replace with the path to your image
@@ -129,8 +129,8 @@ def get_emad(request):
             data = {
                 'status': 'success',
                 'message': 'Data fetched successfully!',
-                'data': {'count_images': len(images), 'aid_labels': aid_labels, 'forest_labels': forest_labels, 'info': metadata_str, 'report': report_openai}
-                }
+                'data': {'count_images': len(images), 'aid_labels_forest': aid_forest, 'aid_labels_non_forest':aid_non_forest, 'forest_labels': forest_labels, 'info': metadata_str, 'report': report_openai}
+            }
     
             return JsonResponse(data)
         
