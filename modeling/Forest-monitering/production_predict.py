@@ -1,7 +1,6 @@
 import joblib
 import numpy as np
 import cv2
-from PIL import Image
 from sklearn.preprocessing import MultiLabelBinarizer, MinMaxScaler
 
 # Load the saved model and pre-trained scaler/binarizer if available
@@ -36,22 +35,24 @@ except FileNotFoundError:
 # Set rescaled_dim to 40 to match the feature size expected by the model
 rescaled_dim = 40  # The dimension used during training
 
-# Function to preprocess a PIL image
-def preprocess_image(pil_image):
-    # Convert PIL image to grayscale
-    image = pil_image.convert("L")
+# Function to preprocess the image
+def preprocess_image(image_bytes):
+    # Convert byte array to numpy array
+    np_array = np.frombuffer(image_bytes, np.uint8)
+    # Decode the image as grayscale
+    image = cv2.imdecode(np_array, cv2.IMREAD_GRAYSCALE)
     # Resize to match training dimensions (40x40 pixels)
-    image_resized = image.resize((rescaled_dim, rescaled_dim), Image.LANCZOS)
-    # Convert to numpy array and flatten to a single vector
-    image_flattened = np.array(image_resized).reshape(1, -1)
+    image_resized = cv2.resize(image, (rescaled_dim, rescaled_dim), interpolation=cv2.INTER_LINEAR)
+    # Flatten the image to a single vector
+    image_flattened = image_resized.reshape(1, -1)
     # Scale using the pre-fitted scaler
     image_scaled = scaler.transform(image_flattened)
     return image_scaled
 
 # Function to classify an image
-def classify_image(pil_image):
+def classify_image(image_bytes):
     # Preprocess the image
-    X = preprocess_image(pil_image)
+    X = preprocess_image(image_bytes)
     # Predict the labels
     predictions = clf.predict(X)
     # Map the prediction to class labels
@@ -59,12 +60,21 @@ def classify_image(pil_image):
     return predicted_labels
 
 """
-Example usage with PIL image
+Example usage with image byte array
 """
-# Load an image as a PIL image
-image_path = '../../../../sherry/input/test-jpg/test_20.jpg'
-pil_image = Image.open(image_path)
 
-# Classify the image
-predicted_labels = classify_image(pil_image)
-print(f"Predicted labels for the image: {predicted_labels}")
+total_tests = 20
+
+all_labels = []
+
+for i in range(total_tests):
+    # Load an image and convert it to byte array for testing
+    with open('../../../../sherry/input/test-jpg/test_{}.jpg'.format(i), 'rb') as f:
+        image_bytes = f.read()
+
+    # Classify the image
+    predicted_labels = classify_image(image_bytes)
+    all_labels.append(predicted_labels)
+    print(f"Predicted labels for the image: {predicted_labels}")
+    
+print(all_labels)
