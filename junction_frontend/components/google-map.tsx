@@ -11,6 +11,7 @@ interface Pin {
 }
 
 
+
 interface MapsProps {
   onDataReceived: (data: any) => void;
 }
@@ -27,7 +28,7 @@ const mapContainerStyle = {
 };
 
 const mapOptions = {
-  mapTypeId: google.maps.MapTypeId.SATELLITE,
+  mapTypeId: 'satellite',
   disableDefaultUI: true,
   zoomControl: true,
   styles: [
