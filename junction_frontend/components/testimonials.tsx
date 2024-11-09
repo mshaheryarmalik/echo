@@ -28,7 +28,7 @@ export default function Testimonials({reportData}: Report) {
   const [category, setCategory] = useState<number>(1);
   const [recievedReport, setReport] = useState<String>('');
   const [markdownContent, setMarkdownContent] = useState('');
-  const markdown = '# Hi, *Pluto*!'
+  const markdown = '## Overview This component allows you to integrate Google Maps into your application with custom markers.'
 
   useEffect(() => {
     setReport(reportData);

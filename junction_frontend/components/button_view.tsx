@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import useMasonry from "@/utils/useMasonry";
 import Image, { StaticImageData } from "next/image";
 import TestimonialImg01 from "@/public/images/testimonial-01.jpg";
@@ -9,16 +9,62 @@ import ClientImg01 from "@/public/images/client-logo-01.svg";
 
 
 interface ButtonProps {
-  onClick: () => void;
+  onClick: (id: number) => void;
   disabled?: boolean;
+  loading?: boolean;
 }
+// Add LoadingSpinner component
+const LoadingSpinner = () => (
+  <svg 
+    className="animate-spin h-4 w-4 text-purple-300" 
+    viewBox="0 0 24 24"
+  >
+    <circle 
+      className="opacity-25" 
+      cx="12" 
+      cy="12" 
+      r="10" 
+      stroke="currentColor" 
+      strokeWidth="4"
+    />
+    <path 
+      className="opacity-90" 
+      fill="currentColor" 
+      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+    />
+  </svg>
+);
 
 
 export default function Buttons({ onClick}: ButtonProps) {
-  const masonryContainer = useMasonry();
   const [category, setData] = useState<number>(1);
-  const handleClick = () => {
-    onClick();
+  const [loading, setLoading] = useState<number>(-1);
+  useEffect(() => {
+    if (loading === -1) {
+      // Reset loading state and refresh UI
+      const cleanup = () => {
+        try {
+          setLoading(-1);
+          setData(prevCategory => prevCategory); // Trigger re-render
+        } catch (error) {
+          console.error('Error cleaning up loading state:', error);
+        }
+      };
+      
+      cleanup();
+      return () => {};
+    }
+  }, [loading]);
+  
+  const handleClick = (id: number) => async (e: React.MouseEvent) => {
+    if(loading !== -1) return;
+    setLoading(id);
+    try {
+      await onClick(id);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    setLoading(-1);
   };
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -29,27 +75,31 @@ export default function Buttons({ onClick}: ButtonProps) {
             <div className="relative inline-flex flex-wrap justify-center rounded-[1.25rem]">
               {/* Button #1 */}
               <button
-                className={`flex h-8 flex-1 items-center gap-2.5 whitespace-nowrap rounded-full px-3 text-sm font-medium 
+                className={`flex h-12 w-50 auto flex-1 items-center justify-center gap-2.5 whitespace-nowrap rounded-full px-3 text-sm font-medium 
               transition-all duration-150 active:scale-95 
               focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-200 
               ${category === 1
                     ? "relative bg-gradient-to-b from-gray-900 via-gray-800/60 to-gray-900 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.indigo.500/0),theme(colors.indigo.500/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)]"
                     : "opacity-65 transition-opacity hover:opacity-90"}`}
                 aria-pressed={category === 1}
-                onClick={handleClick}
+                onClick={handleClick(1)}
+                disabled={loading != -1}
               >
+                {loading === 1 ? (
+                  <LoadingSpinner />
+                ) : (
                 <svg
                   className={`fill-current ${category === 1 ? "text-indigo-500" : "text-gray-600"}`}
                   xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height={16}
+                  width="24"
+                  height={24}
                 >
-                  <path d="M.062 10.003a1 1 0 0 1 1.947.455c-.019.08.01.152.078.19l5.83 3.333c.052.03.115.03.168 0l5.83-3.333a.163.163 0 0 0 .078-.188 1 1 0 0 1 1.947-.459 2.161 2.161 0 0 1-1.032 2.384l-5.83 3.331a2.168 2.168 0 0 1-2.154 0l-5.83-3.331a2.162 2.162 0 0 1-1.032-2.382Zm7.854-7.981-5.83 3.332a.17.17 0 0 0 0 .295l5.828 3.33c.054.031.118.031.17.002l5.83-3.333a.17.17 0 0 0 0-.294L8.085 2.023a.172.172 0 0 0-.17-.001ZM9.076.285l5.83 3.332c1.458.833 1.458 2.935 0 3.768l-5.83 3.333c-.667.38-1.485.38-2.153-.001l-5.83-3.332c-1.457-.833-1.457-2.935 0-3.767L6.925.285a2.173 2.173 0 0 1 2.15 0Z" />
-                </svg>
+                  <path d="M3.478 2.404a.75.75 0 00-.926.941l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.404z" />
+                </svg>)}
                 <span>Send Location</span>
               </button>
               {/* Button #2 */}
-              <button
+              {/* <button
                 className={`flex h-8 flex-1  ms-20 auto items-center gap-2.5 whitespace-nowrap rounded-full px-3 text-sm font-medium 
               transition-all duration-150 active:scale-95 
               focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-200 
@@ -57,7 +107,7 @@ export default function Buttons({ onClick}: ButtonProps) {
                     ? "relative bg-gradient-to-b from-gray-900 via-gray-800/60 to-gray-900 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.indigo.500/0),theme(colors.indigo.500/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)]"
                     : "opacity-65 transition-opacity hover:opacity-90"}`}
                 aria-pressed={category === 1}
-                onClick={handleClick}
+                onClick={handleClick(2)}
               >
                 <svg
                   className={`fill-current ${category === 1 ? "text-indigo-500" : "text-gray-600"}`}
@@ -68,7 +118,7 @@ export default function Buttons({ onClick}: ButtonProps) {
                   <path d="M.062 10.003a1 1 0 0 1 1.947.455c-.019.08.01.152.078.19l5.83 3.333c.052.03.115.03.168 0l5.83-3.333a.163.163 0 0 0 .078-.188 1 1 0 0 1 1.947-.459 2.161 2.161 0 0 1-1.032 2.384l-5.83 3.331a2.168 2.168 0 0 1-2.154 0l-5.83-3.331a2.162 2.162 0 0 1-1.032-2.382Zm7.854-7.981-5.83 3.332a.17.17 0 0 0 0 .295l5.828 3.33c.054.031.118.031.17.002l5.83-3.333a.17.17 0 0 0 0-.294L8.085 2.023a.172.172 0 0 0-.17-.001ZM9.076.285l5.83 3.332c1.458.833 1.458 2.935 0 3.768l-5.83 3.333c-.667.38-1.485.38-2.153-.001l-5.83-3.332c-1.457-.833-1.457-2.935 0-3.767L6.925.285a2.173 2.173 0 0 1 2.15 0Z" />
                 </svg>
                 <span>Reset</span>
-              </button>
+              </button> */}
             </div>
           </div>
 

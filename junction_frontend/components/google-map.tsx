@@ -46,7 +46,7 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
   });
 
-  const handleButtonClick = async () => {
+  const handleButtonClick = async (id:number) => {
     try {
       const response = await fetch('http://localhost:8000/echoapi/get_emad/', {
         method: 'POST',
