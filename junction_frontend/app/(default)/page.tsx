@@ -15,17 +15,17 @@ import Testimonials from "@/components/testimonials";
 
 
 export default function Home() {
-  const testimonialsData: any[] = [];
+  let reportData: any = {};
   const handlerCLick = (data: any) => {
     console.log("data received :");
     console.log(data);
-    testimonialsData.push(data);
+    reportData = data;
   }
   return (
     <>
       <PageIllustration />
       <GoogleMapView onDataReceived={handlerCLick} />
-      <Testimonials testimonialsData={testimonialsData} />
+      <Testimonials reportData={reportData} />
       {/* <Hero />
       <Workflows />
       <Features />

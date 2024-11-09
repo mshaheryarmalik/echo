@@ -11,28 +11,29 @@ interface Testimonials {
 }
 
 interface Report {
-  testimonialsData: any[];
+  reportData: any;
 }
 
-const testimonialsDefault = [
+const defaultReport = [
   {
-    testimonialsData: []
+    reportData: "As a content creator, I was always on the lookout for a tool that could help me keep up with the demand. The AI-driven content tool has been a game-changer. It generates high-quality content in a fraction of the time it used to take me.",
   }]
 
 
-export default function Testimonials({ testimonialsData }: Report) {
+export default function Testimonials({ reportData }: Report) {
   const masonryContainer = useMasonry();
   const [category, setCategory] = useState<number>(1);
-  const [testimonials, setTestimonials] = useState<Report[]>([
+  const [recievedReport, setReport] = useState<Report[]>([
     {
-      testimonialsData: []
+      reportData: ""
     },
   ]);
 
   useEffect(() => {
-    setTestimonials(testimonialsData);
-  }, [testimonialsData]);
-  console.log(testimonials);
+    setReport(reportData);
+  }, [reportData]);
+  console.log("recievedReport:");
+  console.log(recievedReport);
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6">
       <div className="border-t py-12 [border-image:linear-gradient(to_right,transparent,theme(colors.slate.400/.25),transparent)1] md:py-20">
@@ -56,11 +57,11 @@ export default function Testimonials({ testimonialsData }: Report) {
             className="mx-auto max-w-sm items-start gap-6 sm:max-w-none sm:grid-cols-2 lg:grid-cols-3"
             ref={masonryContainer}
           >
-          {testimonials && testimonials.length > 0 ? 
-            testimonials.map((testimonial, index) => (
+          {recievedReport && recievedReport.length > 0 ? 
+            recievedReport.map((testimonial, index) => (
               <div key={index} className="group">
                 <Testimonial report = {testimonial} category={category}>
-                  {testimonial.testimonialsData}
+                  {testimonial.reportData}
                 </Testimonial>
               </div>
             ))
@@ -80,7 +81,7 @@ export function Testimonial({
   children,
 }: {
   report: {
-    testimonialsData: any[];
+    reportData: any;
   };
   category: number;
   children: React.ReactNode;
@@ -105,13 +106,13 @@ export function Testimonial({
             alt={report.testimonialsData[0]}
           /> */}
           <div className="text-sm font-medium text-gray-200">
-            <span>{report.testimonialsData}</span>
+            <span>{report.reportData}</span>
             <span className="text-gray-700"> - </span>
             <a
               className="text-indigo-200/65 transition-colors hover:text-indigo-500"
               href="#0"
             >
-              {report.testimonialsData[0]}
+              {report.reportData}
             </a>
           </div>
         </div>
