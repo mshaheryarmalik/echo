@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
 import Button from "@/components/button_view";
 
-const center = { lat: 37.7749, lng: -122.4194 };
+const center = { lat: 60.16, lng: 24.90 };
 interface Pin {
   lat: number;
   lng: number;
