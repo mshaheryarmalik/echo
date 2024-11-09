@@ -48,7 +48,7 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
 
   const handleButtonClick = async () => {
     try {
-      const response = await fetch('http://localhost:8000/echoapi/get_emad', {
+      const response = await fetch('http://localhost:8000/echoapi/get_emad/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
