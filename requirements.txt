@@ -18,3 +18,4 @@ joblib==1.4.2
 openai==1.54.3
 geopy==2.4.1
 python-dotenv==1.0.1
+gunicorn==23.0.0
