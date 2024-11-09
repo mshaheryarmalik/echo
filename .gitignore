@@ -163,4 +163,4 @@ cython_debug/
 
 .next/
 node_modules/
-junction_frontend/.env.local
+
