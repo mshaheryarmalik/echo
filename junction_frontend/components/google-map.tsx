@@ -10,6 +10,11 @@ interface Pin {
   lng: number;
 }
 
+
+interface MapsProps {
+  onDataReceived: (data: any) => void;
+}
+
 const newPin = {}
 
 const mapContainerStyle = {
@@ -33,7 +38,7 @@ const mapOptions = {
   ]
 };
 
-export default function GoogleMapView() {
+export default function GoogleMapView({ onDataReceived }: MapsProps) {
   const [pin, setPin] = useState<Pin | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
@@ -43,7 +48,7 @@ export default function GoogleMapView() {
 
   const handleButtonClick = async () => {
     try {
-      const response = await fetch('http://localhost:8000/echoapi/get_emad', {
+      const response = await fetch('http://localhost:8000/echoapi/get_emad/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -55,10 +60,12 @@ export default function GoogleMapView() {
       });
       
       const data = await response.json();
-      console.log('Success:', data);
+      // onResp(data);
+      onDataReceived(data);
       return data;
     } catch (error) {
       console.error('Error:', error);
+      onDataReceived(error);
       throw error;
     }
   }
@@ -100,7 +107,7 @@ export default function GoogleMapView() {
         </GoogleMap>
       </div>
       <div>
-        <Button onClick={() => handleButtonClick} />
+        <Button onClick={handleButtonClick} />
       </div>
     </div>
 

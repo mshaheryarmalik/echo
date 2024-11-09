@@ -26,10 +26,12 @@ interface ButtonProps {
 }
 
 
-export default function Buttons({ onClick, disabled }: ButtonProps) {
+export default function Buttons({ onClick}: ButtonProps) {
   const masonryContainer = useMasonry();
   const [category, setData] = useState<number>(1);
-
+  const handleClick = () => {
+    onClick();
+  };
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6">
       <div className="border-t py-12 [border-image:linear-gradient(to_right,transparent,theme(colors.slate.400/.25),transparent)1] md:py-20">
@@ -41,7 +43,7 @@ export default function Buttons({ onClick, disabled }: ButtonProps) {
               <button
                 className={`flex h-8 flex-1 items-center gap-2.5 whitespace-nowrap rounded-full px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-200 ${category === 1 ? "relative bg-gradient-to-b from-gray-900 via-gray-800/60 to-gray-900 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.indigo.500/0),theme(colors.indigo.500/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)]" : "opacity-65 transition-opacity hover:opacity-90"}`}
                 aria-pressed={category === 1}
-                onClick={() => onClick()}
+                onClick={handleClick}
               >
                 <svg
                   className={`fill-current ${category === 1 ? "text-indigo-500" : "text-gray-600"}`}
@@ -57,7 +59,7 @@ export default function Buttons({ onClick, disabled }: ButtonProps) {
               <button
                 className={`flex h-8 flex-1 items-center gap-2.5 whitespace-nowrap rounded-full px-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-200 ${category === 2 ? "relative bg-gradient-to-b from-gray-900 via-gray-800/60 to-gray-900 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,theme(colors.indigo.500/0),theme(colors.indigo.500/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)]" : "opacity-65 transition-opacity hover:opacity-90"}`}
                 aria-pressed={category === 2}
-                onClick={() => onClick()}
+                onClick={handleClick}
               >
                 <svg
                   className={`fill-current ${category === 2 ? "text-indigo-500" : "text-gray-600"}`}
