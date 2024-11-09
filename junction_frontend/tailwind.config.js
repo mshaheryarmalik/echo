@@ -47,4 +47,31 @@ module.exports = {
     },
   },
   plugins: [require("@tailwindcss/forms")],
+
+   // Enable production optimization
+  swcMinify: true,
+  
+   // Configure bundle analyzer
+   webpack: (config, { dev, isServer }) => {
+     if (!dev && !isServer) {
+       // Add bundle analyzer in production builds
+       const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+       config.plugins.push(
+         new BundleAnalyzerPlugin({
+           analyzerMode: 'static',
+           reportFilename: './bundles/bundle-report.html'
+         })
+       )
+     }
+     return config
+   },
+ 
+   // Configure compression
+   compress: true,
+   
+   // Enable aggressive code splitting
+   experimental: {
+     optimizeCss: true,
+     optimizePackageImports: ['lodash', '@mui/material']
+   }
 };
