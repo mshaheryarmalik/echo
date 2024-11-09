@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useLoadScript, GoogleMap, Marker } from '@react-google-maps/api';
+import { useLoadScript, GoogleMap, Marker, Autocomplete } from '@react-google-maps/api';
 import Button from "@/components/button_view";
 
 const center = { lat: 60.16, lng: 24.90 };
@@ -9,6 +9,7 @@ interface Pin {
   lat: number;
   lng: number;
 }
+
 
 
 interface MapsProps {
@@ -27,6 +28,7 @@ const mapContainerStyle = {
 };
 
 const mapOptions = {
+  mapTypeId: 'satellite',
   disableDefaultUI: true,
   zoomControl: true,
   styles: [
@@ -41,12 +43,34 @@ const mapOptions = {
 export default function GoogleMapView({ onDataReceived }: MapsProps) {
   const [pin, setPin] = useState<Pin | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [searchBox, setSearchBox] = useState<google.maps.places.Autocomplete | null>(null);
+
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
+    libraries: ['places']
   });
 
-  const handleButtonClick = async () => {
+  const onLoadSearchBox = (ref: google.maps.places.Autocomplete) => {
+    setSearchBox(ref);
+  };
+
+  const onPlaceSelected = () => {
+    if (searchBox) {
+      const place = searchBox.getPlace();
+      if (place.geometry?.location) {
+        const newPin = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng()
+        };
+        setPin(newPin);
+        map?.panTo(newPin);
+        map?.setZoom(15);
+      }
+    }
+  };
+
+  const handleButtonClick = async (id:number) => {
     try {
       const response = await fetch('http://localhost:8000/echoapi/get_emad/', {
         method: 'POST',
@@ -92,6 +116,25 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
 
   return (
     <div>
+      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 w-[300px]">
+        {isLoaded && (
+          <Autocomplete
+            onLoad={onLoadSearchBox}
+            onPlaceChanged={onPlaceSelected}
+          >
+            <input
+              type="text"
+              placeholder="Search location..."
+              className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 
+              focus:outline-none focus:ring-2 focus:ring-blue-500 
+              placeholder-gray-400 shadow-lg"
+              style={{
+                backdropFilter: 'blur(4px)',
+              }}
+            />
+          </Autocomplete>
+        )}
+      </div>
       <div className="mt-20 h-[500px] w-full flex items-center justify-center bg-gray-900/90 rounded-lg">
         <GoogleMap
           zoom={13}
