@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     # Other apps
     "echoapi",
+    "corsheaders",
 ]
 
 
@@ -51,6 +52,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    # Other middleware
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "echoapp.urls"
@@ -125,3 +129,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CORS_ALLOW_ALL_ORIGINS = True
