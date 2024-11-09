@@ -36,9 +36,11 @@ except FileNotFoundError:
 rescaled_dim = 40  # The dimension used during training
 
 # Function to preprocess the image
-def preprocess_image(image_path):
-    # Read the image in grayscale
-    image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+def preprocess_image(image_bytes):
+    # Convert byte array to numpy array
+    np_array = np.frombuffer(image_bytes, np.uint8)
+    # Decode the image as grayscale
+    image = cv2.imdecode(np_array, cv2.IMREAD_GRAYSCALE)
     # Resize to match training dimensions (40x40 pixels)
     image_resized = cv2.resize(image, (rescaled_dim, rescaled_dim), interpolation=cv2.INTER_LINEAR)
     # Flatten the image to a single vector
@@ -48,9 +50,9 @@ def preprocess_image(image_path):
     return image_scaled
 
 # Function to classify an image
-def classify_image(image_path):
+def classify_image(image_bytes):
     # Preprocess the image
-    X = preprocess_image(image_path)
+    X = preprocess_image(image_bytes)
     # Predict the labels
     predictions = clf.predict(X)
     # Map the prediction to class labels
@@ -58,9 +60,12 @@ def classify_image(image_path):
     return predicted_labels
 
 """
-USAGE
+Example usage with image byte array
 """
+# Load an image and convert it to byte array for testing
+with open('../../../../sherry/input/test-jpg/test_20.jpg', 'rb') as f:
+    image_bytes = f.read()
 
-# image_path = '../../../../sherry/input/test-jpg/test_20.jpg'  # Replace with the path to your image
-# predicted_labels = classify_image(image_path)
-# print(f"Predicted labels for the image: {predicted_labels}")
+# Classify the image
+predicted_labels = classify_image(image_bytes)
+print(f"Predicted labels for the image: {predicted_labels}")
