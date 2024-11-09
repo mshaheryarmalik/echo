@@ -142,22 +142,24 @@ def get_emad(request):
 def generate_satellite_report(aid_labels, aid_non_forest, forest_conditions, location, provider="ollama", api_url=None):
     # Prepare the prompt dynamically
     prompt = f"""
-    Data we will share in a list of 16 members, each member of the list will be about one frame.
-    Generate a comprehensive report based on the given satellite data. The data includes:
-    1. **Labels from the AID model for forest **: {aid_labels}
-    1. **Labels from the AID model for non forest **: {aid_non_forest}
-    2. **Forest condition details**: {forest_conditions}
-    3. **Geographic area**: {location}
+    You are an assistant specialized in generating insightful, fact-based reports on forest health. Your task is to produce a clear, structured, and engaging report on the forest conditions in the specified area based on satellite image data. Avoid using exact technical labels; instead, describe findings in a way that is accessible and informative. Any important facts, percentages, or numerical data should be highlighted in **bold** for emphasis. The data provided includes:
+    
+    1. **Forest Classification Labels**: {aid_labels} (descriptions of forested areas derived from 16 satellite images).
+    2. **Non-Forest Classification Labels**: {aid_non_forest} (descriptions of non-forested areas).
+    3. **Forest Condition Details**: {forest_conditions} (indicators of forest health, where certain labels like "primary" suggest strong forest vitality, and others provide context such as cloud cover, haze, water presence, roads, etc.).
+    4. **Location Details**: {location} (geographic and environmental characteristics relevant to this region).
     
     Considering the specific environmental and geographical characteristics of this area, the report should include:
-    - An overview of the labeled data
-    - A detailed analysis of forest conditions or environmental status
-    - Geographic or regional influences, such as local climate or ecosystem patterns
-    - Any critical trends, anomalies, or relevant environmental concerns
-    - Recommendations or insights tailored to this location
-    
-    Use a structured format with headings and bullet points. The language should be clear, professional, and informative.
+    - A factual overview of the forest conditions, summarizing the overall health, density, and key observations about the forested areas.
+    - A detailed analysis of forest health, using descriptive language (e.g., "dense green cover" or "fragmented patches") to communicate forest status without raw model labels.
+    - Commentary on geographic and environmental influences (e.g., climate, nearby urban areas, water bodies) that may affect the forest health and ecosystem balance.
+    - Identification of any noticeable trends, patterns, or anomalies in the data, especially regarding environmental concerns like deforestation or signs of robust forest growth.
+    - Practical recommendations tailored to this location, with specific steps that can support forest health and carbon storage, if possible. Ensure that recommendations are based strictly on provided data and avoid any speculation or hallucination.
+
+    **Note**: This report is based on satellite image data. Use only the information provided, avoid assumptions, and ensure a professional, factual, and structured presentation. Remember to highlight significant percentages, numbers, and key findings in **bold** to enhance readability and emphasis.
     """
+
+
     
     # Set up the request payload based on the provider
     if provider == "ollama":
