@@ -31,7 +31,7 @@ device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
 # Load the model architecture and checkpoint
 # Please give path to model folder.
-checkpoint_path = "/Users/401726/Desktop/checkpoint-10000"
+checkpoint_path = "../../../checkpoint-10000"
 num_classes = 30  # Adjust this to match your dataset's number of classes
 model = ViTForImageClassification.from_pretrained(
     "google/vit-base-patch16-224-in21k",
@@ -78,19 +78,53 @@ def get_emad(request):
             
             images = fetch_images(center_lat, center_lon, API_KEY)
 
+
+            # Forest-related labels
+            forest_labels_aid_guide = [
+                "Forest",
+                "Park",      # Conditionally includes forested areas
+                "Farmland",  # May include some tree cover, but primarily agricultural
+                "Meadow"     # Open grassland, sometimes bordering forest
+            ]
+
+            # Non-forest labels
+            non_forest_labels_aid_guide = [
+                "Center", "Airport", "Beach", "BareLand", "BaseballField",
+                "Bridge", "Church", "Commercial", "DenseResidential", "Desert",
+                "Industrial", "MediumResidential", "Parking", "Playground",
+                "RailwayStation", "Resort", "School", "Square", "Stadium",
+                "StorageTanks", "Viaduct"
+            ]
+
             aid_labels = []
             for img in images:
                 aid_labels.append(predict_pil_image(img))
 
+            aid_forest = []
+            aid_non_forest = []
+
+            for index, aid in enumerate(aid_labels):
+                if aid in forest_labels_aid_guide:
+                    aid_forest.append((index, aid))
+                else:
+                    aid_non_forest.append((index, aid))
+
             # image_path = '../../../../sherry/input/test-jpg/test_20.jpg'  # Replace with the path to your image
+            
             forest_labels = []
-            for img in images:
-                forest_labels.extend(classify_image(img))
+            for index, label in aid_forest:
+                forest_labels.extend(classify_image(images[index]))
                 #print(f"Predicted labels for the image: {forest_labels}")
+
+            
+            # forest_labels = []
+            # for img in images:
+            #     forest_labels.extend(classify_image(img))
+            #     #print(f"Predicted labels for the image: {forest_labels}")
 
             metadata_str = get_google_maps_response_as_string(center_lat, center_lon, API_KEY)
 
-            report_openai = generate_satellite_report(aid_labels, forest_labels, metadata_str, provider="openai")
+            report_openai = generate_satellite_report(aid_forest, aid_non_forest, forest_labels, metadata_str, provider="openai")
             
             data = {
                 'status': 'success',
@@ -105,12 +139,13 @@ def get_emad(request):
     else:
         return JsonResponse({'error': 'Invalid request method. Use POST.'}, status=405)
 
-def generate_satellite_report(aid_labels, forest_conditions, location, provider="ollama", api_url=None):
+def generate_satellite_report(aid_labels, aid_non_forest, forest_conditions, location, provider="ollama", api_url=None):
     # Prepare the prompt dynamically
     prompt = f"""
     Data we will share in a list of 16 members, each member of the list will be about one frame.
     Generate a comprehensive report based on the given satellite data. The data includes:
-    1. **Labels from the AID model**: {aid_labels}
+    1. **Labels from the AID model for forest **: {aid_labels}
+    1. **Labels from the AID model for non forest **: {aid_non_forest}
     2. **Forest condition details**: {forest_conditions}
     3. **Geographic area**: {location}
     
