@@ -27,6 +27,7 @@ const mapContainerStyle = {
 };
 
 const mapOptions = {
+  mapTypeId: google.maps.MapTypeId.SATELLITE,
   disableDefaultUI: true,
   zoomControl: true,
   styles: [
