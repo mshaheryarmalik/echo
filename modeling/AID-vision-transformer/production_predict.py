@@ -1,4 +1,5 @@
 import os
+import random
 import torch
 from transformers import ViTForImageClassification, ViTFeatureExtractor
 from safetensors.torch import load_file
@@ -10,8 +11,7 @@ import json
 device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
 # Load the model architecture and checkpoint
-# Please give path to model folder.
-checkpoint_path = "../../../../checkpoint-10000"
+checkpoint_path = "../../../../checkpoint-10000"  # Path to model folder
 num_classes = 30  # Adjust this to match your dataset's number of classes
 model = ViTForImageClassification.from_pretrained(
     "google/vit-base-patch16-224-in21k",
@@ -62,14 +62,42 @@ def predict_pil_image(pil_image):
     
     return label
 
-# Example usage with a PIL image
-# Load an example image (you can replace this with any PIL image object)
+# Function to get random images from each class folder and predict their labels
+def classify_random_images_from_classes(data_dir, num_images=16):
+    predicted_labels = []
+    # Get list of class directories
+    class_dirs = [os.path.join(data_dir, d) for d in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, d))]
+    
+    # Randomly select images from each class directory
+    for class_dir in random.sample(class_dirs, num_images):
+        # Get a list of images in the class directory
+        image_files = [f for f in os.listdir(class_dir) if f.endswith(('.jpg', '.png', '.jpeg'))]
+        
+        if not image_files:
+            continue  # Skip if no images are found in this directory
+        
+        # Randomly select one image from the class directory
+        random_image = random.choice(image_files)
+        image_path = os.path.join(class_dir, random_image)
+        
+        # Open image and predict the label
+        pil_image = Image.open(image_path)
+        label = predict_pil_image(pil_image)
+        predicted_labels.append((image_path, label))
+    
+    return predicted_labels
 
-"""
-USAGE
-"""
+# Example usage
+data_dir = "../../../../AID"  # Replace with the path to your dataset directory containing class subfolders
+predictions = classify_random_images_from_classes(data_dir, num_images=16)
 
-# image_path = "../../../../AID/Bridge/bridge_3.jpg"
-# pil_image = Image.open(image_path)
-# predicted_label = predict_pil_image(pil_image)
-# print(f"Predicted label: {predicted_label}")
+
+labels = []
+# Print the results
+for image_path, label in predictions:
+    print(f"Image: {image_path}, Predicted Label: {label}")
+    labels.append(label)
+
+print(labels)
+
+
