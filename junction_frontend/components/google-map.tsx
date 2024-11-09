@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import { useLoadScript, GoogleMap, Marker, Autocomplete } from '@react-google-maps/api';
 import Button from "@/components/button_view";
+import AudioRing from "@/components/ring_anim";
 
 const center = { lat: 60.16, lng: 24.90 };
 interface Pin {
@@ -44,6 +45,7 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
   const [pin, setPin] = useState<Pin | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [searchBox, setSearchBox] = useState<google.maps.places.Autocomplete | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
 
   const { isLoaded } = useLoadScript({
@@ -72,6 +74,7 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
 
   const handleButtonClick = async (id:number) => {
     try {
+      setLoading(true);
       const response = await fetch('http://localhost:8000/echoapi/get_emad/', {
         method: 'POST',
         headers: {
@@ -86,10 +89,12 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
       const data = await response.json();
       let rep = data.report;
       // onResp(data);
+      setLoading(false);
       onDataReceived(rep);
       return rep;
     } catch (error) {
       console.error('Error:', error);
+      setLoading(false);
       onDataReceived("Temp data");
       throw error;
     }
@@ -149,7 +154,13 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
             />
           )}
         </GoogleMap>
+        {loading == true ? (
+          <div className="mt-4 z-10 absolute">
+            <AudioRing />
+          </div>
+        ): null}
       </div>
+    
       <div>
         <Button onClick={handleButtonClick} />
       </div>
