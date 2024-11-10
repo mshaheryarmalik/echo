@@ -18,6 +18,10 @@ ForestEcho combines advanced technology with intuitive features to deliver real-
 
 3. **Real-Time Reporting**: ForestEcho generates detailed reports within seconds, summarizing forest health, environmental stressors, and recommendations based on recent satellite data.
 
+<div style="clear: both; text-align: center;">
+  <img src="architecture.png" alt="Forest Map" style="max-width: 100%;" />
+</div>
+
 ---
 
 ### Built for Impact
