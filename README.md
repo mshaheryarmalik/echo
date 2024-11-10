@@ -51,7 +51,7 @@ ForestEcho is designed for real-world impact, enabling:
 
 - **[Youtube Video Link](TODO)**
 
-- **[Live Website](https://www.forestecho-topaz.vercel.app)**
+- **[Live Website](https://www.forestechofi.vercel.app)**
 
 - **[Canva Pitch Presentation](https://www.canva.com/design/DAGWAeHip2I/pbYZtxCAtDe9RpAXMAoA7g/edit)**
 
