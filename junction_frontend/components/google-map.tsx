@@ -67,7 +67,7 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
         };
         setPin(newPin);
         map?.panTo(newPin);
-        map?.setZoom(15);
+        map?.setZoom(14);
       }
     }
   };
@@ -80,14 +80,16 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           latitude: pin?.lat,
           longitude: pin?.lng
          })
       });
       
       const data = await response.json();
-      let rep = data.report;
+      //opt report key from data
+      console.log(data.data.report);
+      const rep = data.data.report;
       // onResp(data);
       setLoading(false);
       onDataReceived(rep);
@@ -112,6 +114,7 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
       };
       setPin(newPin);
       map?.panTo(newPin);
+      map?.setZoom(14);
     }
   };
 
