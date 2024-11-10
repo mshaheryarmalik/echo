@@ -16,7 +16,7 @@ ForestEcho combines advanced technology with intuitive features to deliver real-
    - **Vision Transformer Model**: Processes satellite images to identify and categorize forested areas.
    - **Forest Health Classification**: Goes beyond simple labels, highlighting “primary” (healthy) areas and flagging concerns like haze, water encroachment, and infrastructure impacts.
 
-3. **Real-Time Reporting**: ForestEcho generates detailed reports within seconds, summarizing forest health, environmental stressors, and recommendations based on recent satellite data.
+3. **Forest Health Reporting**: ForestEcho generates detailed reports within seconds, summarizing forest health, environmental stressors, and recommendations based on recent satellite data.
 
 <!-- Adding image under the third point -->
 <center>
