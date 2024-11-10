@@ -5,6 +5,7 @@
 //   description: "Page description",
 // };
 
+import { useEffect, useState } from "react";
 import PageIllustration from "@/components/page-illustration";
 import GoogleMapView from "@/components/google-map";
 // import Workflows from "@/components/workflows";
@@ -15,12 +16,17 @@ import Testimonials from "@/components/testimonials";
 
 
 export default function Home() {
-  let reportData: String = "";
+  const [reportData, setReportData] = useState<String>('');
   const handlerCLick = (data: String) => {
-    console.log("data received :");
-    console.log(data);
-    reportData = data;
+    setReportData(data);
   }
+  // use effect to refresh
+  useEffect(() => {
+    if(reportData != ""){
+  
+    }
+  }, [reportData]);
+
   return (
     <>
       <PageIllustration />

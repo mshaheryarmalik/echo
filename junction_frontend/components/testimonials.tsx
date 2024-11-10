@@ -34,22 +34,19 @@ export default function Testimonials({reportData}: Report) {
     setReport(reportData);
   }, [reportData]);
 
-  useEffect(() => {
-    const fetchMarkdown = async () => {
-      try {
-        const response = await fetch('junction_frontend/public/temp.md');
-        const text = await response.text();
-        setMarkdownContent(text);
-      } catch (error) {
-        console.error('Error loading markdown:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchMarkdown = async () => {
+  //     try {
+  //       const response = await fetch('junction_frontend/public/temp.md');
+  //       const text = await response.text();
+  //       setMarkdownContent(text);
+  //     } catch (error) {
+  //       // console.error('Error loading markdown:', error);
+  //     }
+  //   };
     
-    fetchMarkdown();
-  }, []);
-
-  console.log("recievedReport:");
-  console.log(recievedReport);
+  //   fetchMarkdown();
+  // }, []);
 
 
   return (
@@ -75,14 +72,9 @@ export default function Testimonials({reportData}: Report) {
             className="mx-auto max-w-sm items-start gap-6 sm:max-w-none"
             ref={masonryContainer}
           >
-          {recievedReport ?
-            <Testimonial report={recievedReport} category={category}>
-                {recievedReport}
-            </Testimonial>
-            : 
-            <div className="prose prose-invert max-w-none">
-              <Markdown remarkPlugins={[remarkGfm]}>{markdown}</Markdown>
-            </div>}
+          <Testimonial report={reportData} category={category}>
+              {''}
+          </Testimonial>
           </div>
         {/* </div> */}
       </div>
@@ -119,7 +111,7 @@ export function Testimonial({
             alt={report.testimonialsData[0]}
           /> */}
           <div className="text-sm font-medium text-gray-200">
-            <span>{report}</span>
+            {/* <span>{report}</span> */}
             <span className="text-gray-700"> - </span>
             <a
               className="text-indigo-200/65 transition-colors hover:text-indigo-500"

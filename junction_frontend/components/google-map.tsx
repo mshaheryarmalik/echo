@@ -88,7 +88,6 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
       
       const data = await response.json();
       //opt report key from data
-      console.log(data.data.report);
       const rep = data.data.report;
       // onResp(data);
       setLoading(false);
