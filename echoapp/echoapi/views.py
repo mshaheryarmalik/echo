@@ -31,7 +31,7 @@ device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
 
 # Load the model architecture and checkpoint
 # Please give path to model folder.
-checkpoint_path = "../../../checkpoint-10000"
+checkpoint_path = "../../my-gcs-bucket/checkpoint-10000/"
 num_classes = 30  # Adjust this to match your dataset's number of classes
 model = ViTForImageClassification.from_pretrained(
     "google/vit-base-patch16-224-in21k",
