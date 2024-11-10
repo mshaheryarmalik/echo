@@ -96,7 +96,7 @@ export default function GoogleMapView({ onDataReceived }: MapsProps) {
     } catch (error) {
       console.error('Error:', error);
       setLoading(false);
-      onDataReceived("Temp data");
+      onDataReceived("Something went wrong, please select location & try again");
       throw error;
     }
   }

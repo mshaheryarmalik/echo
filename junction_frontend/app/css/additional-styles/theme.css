@@ -79,4 +79,8 @@
     -webkit-transform: translate3d(10px, 0, 0) scale(1.2);
     transform: translate3d(10px, 0, 0) scale(1.2);
   }
+
+  nextjs-portal {
+    display: none;
+  }
 }

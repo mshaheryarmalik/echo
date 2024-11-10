@@ -99,9 +99,7 @@ export function Testimonial({
         <div>
           {/* <Image src={report.testimonialsData[0]} height={36} alt="Client logo" /> */}
         </div>
-        <p className="text-indigo-200/65 before:content-['“'] after:content-['”']">
-          {children}
-        </p>
+      
         <div className="flex items-center gap-3">
           {/* <Image
             className="inline-flex shrink-0 rounded-full"
@@ -110,18 +108,8 @@ export function Testimonial({
             height={36}
             alt={report.testimonialsData[0]}
           /> */}
-          <div className="text-sm font-medium text-gray-200">
-            {/* <span>{report}</span> */}
-            <span className="text-gray-700"> - </span>
-            <a
-              className="text-indigo-200/65 transition-colors hover:text-indigo-500"
-              href="#0"
-            >
-              {/* {report} */}
-            </a>
-          </div>
           <div className="prose prose-invert max-w-none">
-              <Markdown remarkPlugins={[remarkGfm]}>{report.toString()}</Markdown>
+              <Markdown>{report.toString()}</Markdown>
           </div>
         </div>
       </div>
