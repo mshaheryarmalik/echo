@@ -39,7 +39,7 @@ ForestEcho’s architecture integrates:
 ### Why ForestEcho Matters
 
 ForestEcho is designed for real-world impact, enabling:
-- **Real-Time Forest Monitoring** to address threats as they arise.
+- **Forest Health Monitoring** to address threats as they arise.
 - **Drone Forestation** to target replanting projects.
 - **Biodiversity Conservation** to protect habitats.
 - **Wildfire Risk Management** to identify high-risk areas.
@@ -51,7 +51,7 @@ ForestEcho is designed for real-world impact, enabling:
 
 - **[Youtube Video Link](TODO)**
 
-- **[Live Website](https://www.forestechofi.vercel.app)**
+- **[Live Website](http://34.55.73.80:3000/)**
 
 - **[Canva Pitch Presentation](https://www.canva.com/design/DAGWAeHip2I/pbYZtxCAtDe9RpAXMAoA7g/edit)**
 
