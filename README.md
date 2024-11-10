@@ -2,7 +2,7 @@
 
 Imagine a world where we could protect forests more effectively, potentially saving **100 million trees every year**. This vision is closer to reality with **ForestEcho**—a platform that uses satellite data and AI to monitor forest health, empowering decision-makers to take timely, informed actions.
 
-Forests are disappearing at an alarming rate. In **2022**, we lost **9.9 billion trees**, which impacts **80% of land-based species** and contributes to **30% of global carbon emissions**. Amidst this crisis, ForestEcho provides crucial insights, aiming to reduce deforestation by **5-10%** each year.
+Forests are disappearing at an alarming rate. In **2022**, we lost **9.9 billion trees**, the forest impacts **80% of land-based species** and contributes to **30% of global carbon impact**. Amidst this crisis, ForestEcho provides crucial insights, aiming to reduce deforestation by **5-10%** each year.
 
 ---
 
