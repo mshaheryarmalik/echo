@@ -2,7 +2,7 @@
 
 Imagine a world where we could protect forests more effectively, potentially saving **100 million trees every year**. This vision is closer to reality with **ForestEcho**—a platform that uses satellite data and AI to monitor forest health, empowering decision-makers to take timely, informed actions.
 
-Forests are disappearing at an alarming rate. In **2022**, we lost **9.9 billion trees**, impacting **80% of land-based species** and contributing to **30% of global carbon emissions**. Amidst this crisis, ForestEcho provides crucial insights, aiming to reduce deforestation by **5-10%** each year.
+Forests are disappearing at an alarming rate. In **2022**, we lost **9.9 billion trees**, which impacts **80% of land-based species** and contributes to **30% of global carbon emissions**. Amidst this crisis, ForestEcho provides crucial insights, aiming to reduce deforestation by **5-10%** each year.
 
 ---
 
@@ -18,9 +18,10 @@ ForestEcho combines advanced technology with intuitive features to deliver real-
 
 3. **Real-Time Reporting**: ForestEcho generates detailed reports within seconds, summarizing forest health, environmental stressors, and recommendations based on recent satellite data.
 
-<div style="clear: both; text-align: center;">
+<!-- Adding image under the third point -->
+<center>
   <img src="architecture.png" alt="Forest Map" style="max-width: 100%;" />
-</div>
+</center>
 
 ---
 
@@ -43,6 +44,16 @@ ForestEcho is designed for real-world impact, enabling:
 - **Biodiversity Conservation** to protect habitats.
 - **Wildfire Risk Management** to identify high-risk areas.
 - **Carbon Credit Validation** with reliable forest health data.
+
+---
+
+### Video link/Live Demo/Pitching Link
+
+- **[Youtube Video Link](TODO)**
+
+- **[Live Website](https://www.forestecho-topaz.vercel.app)**
+
+- **[Canva Pitch Presentation](https://www.canva.com/design/DAGWAeHip2I/pbYZtxCAtDe9RpAXMAoA7g/edit)**
 
 ---
 
