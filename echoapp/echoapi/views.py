@@ -211,9 +211,9 @@ def generate_satellite_report(aid_labels, aid_non_forest, forest_conditions, loc
         return f"Error {response.status_code}: {response.text}"
 
 # Load the saved model and pre-trained scaler/binarizer if available
-model_filename = "../modeling/Forest-monitering/multilabel_logistic_regression.pkl"
-scaler_filename = "../modeling/Forest-monitering/scaler.pkl"
-binarizer_filename = "../modeling/Forest-monitering/binarizer.pkl"
+model_filename = "../modeling/Forest-monitoring/multilabel_logistic_regression.pkl"
+scaler_filename = "../modeling/Forest-monitoring/scaler.pkl"
+binarizer_filename = "../modeling/Forest-monitoring/binarizer.pkl"
 
 # Load the classifier model
 clf = joblib.load(model_filename)
