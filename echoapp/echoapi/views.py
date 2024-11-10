@@ -167,7 +167,7 @@ def generate_satellite_report(aid_labels, aid_non_forest, forest_conditions, loc
             api_url = "http://localhost:11434/v1/chat/completions"
         
         data = {
-            "model": "llama3.2:3b",  # Adjust model name as needed for Ollama
+            "model": "gpt-4-turbo",  # Adjust model name as needed for Ollama
             "messages": [{"role": "user", "content": prompt}],
             "max_tokens": 3000,
             "temperature": 0.5
