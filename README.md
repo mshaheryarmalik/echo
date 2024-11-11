@@ -47,11 +47,9 @@ ForestEcho is designed for real-world impact, enabling:
 
 ---
 
-### Video link/Live Demo/Pitching Link
+### Video link/Pitching Link
 
 - **[Youtube Video Link](https://youtu.be/sq_5cilhGQM)**
-
-- **[Live Website](http://34.55.73.80:3000/)**
 
 - **[Canva Pitch Presentation](https://www.canva.com/design/DAGWAeHip2I/pbYZtxCAtDe9RpAXMAoA7g/edit)**
 
